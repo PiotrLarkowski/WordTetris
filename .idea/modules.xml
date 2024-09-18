@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/WordTetris.iml" filepath="$PROJECT_DIR$/WordTetris.iml" />
+    </modules>
+  </component>
+</project>
