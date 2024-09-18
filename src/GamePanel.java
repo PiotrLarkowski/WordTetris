@@ -32,7 +32,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        double drawInterval = (double) 1000000000 / FPS;
+        long oneSecondInNano = 1000000000;
+        double drawInterval = (double) oneSecondInNano / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -51,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
                 delta --;
                 drawCount++;
             }
-            if(timer >= 1000000000){
+            if(timer >= oneSecondInNano){
                 System.out.println("FPS:"+drawCount);
                 drawCount = 0;
                 timer = 0;
