@@ -66,17 +66,28 @@ public class KeyHandler implements KeyListener {
     public void draw(Graphics2D g2){
         g2.setColor(Color.black);
         g2.setFont(new Font("Arial",Font.BOLD,32));
-        try {
-            g2.drawString("" + letter1, 200, 800);
-            g2.drawString("" + letter2, 240, 800);
-            g2.drawString("" + letter3, 280, 800);
-            g2.drawString("" + letter4, 320, 800);
-            g2.drawString("" + letter5, 360, 800);
-            g2.drawString("" + letter6, 400, 800);
-            g2.drawString("" + letter7, 440, 800);
-            g2.drawString("" + letter8, 480, 800);
-        }catch(Exception e){
 
+        g2.drawString("INPUT TEXT", 200, 730);
+
+        g2.drawRect(70,760,40,60);
+        g2.drawRect(130,760,40,60);
+        g2.drawRect(190,760,40,60);
+        g2.drawRect(250,760,40,60);
+        g2.drawRect(310,760,40,60);
+        g2.drawRect(370,760,40,60);
+        g2.drawRect(430,760,40,60);
+        g2.drawRect(490,760,40,60);
+
+        try {
+            g2.drawString("" + letter1, 80, 800);
+            g2.drawString("" + letter2, 140, 800);
+            g2.drawString("" + letter3, 200, 800);
+            g2.drawString("" + letter4, 260, 800);
+            g2.drawString("" + letter5, 320, 800);
+            g2.drawString("" + letter6, 380, 800);
+            g2.drawString("" + letter7, 440, 800);
+            g2.drawString("" + letter8, 500, 800);
+        }catch(Exception ignored){
         }
     }
 }

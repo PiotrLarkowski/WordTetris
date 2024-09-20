@@ -1,7 +1,6 @@
 import java.awt.*;
 
 public class Block {
-    int presentLevel = 1;
     public static final int BLOCK_HEIGHT = 50;
     public static final int BLOCK_WIDTH = 180;
     public static int x = (GamePanel.WIDTH/2)-PlayManager.WIDTH/2+(PlayManager.WIDTH/2-BLOCK_WIDTH/2);

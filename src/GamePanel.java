@@ -66,8 +66,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         pm.update();
         currentTime = System.currentTimeMillis();
-        if(isBlocDropping && (currentTime-lastTime)>=2000){
-            System.out.println("Block update");
+        if(isBlocDropping && (currentTime-lastTime)>=1000){
             block.update();
             lastTime = currentTime;
         }
@@ -81,6 +80,12 @@ public class GamePanel extends JPanel implements Runnable{
             block = new Block(wordsList.get(0));
             lastTime = System.currentTimeMillis();
             isBlocDropping = true;
+        }
+        if(Block.y >= 600-PlayManager.bottomLevel*Block.BLOCK_HEIGHT){
+            PlayManager.bottomY = Block.y+2;
+            isBlocDropping = false;
+            Block.y = PlayManager.TOP+12;
+            PlayManager.bottomLevel ++;
         }
         block.draw(g2);
         keyHandler.draw(g2);
