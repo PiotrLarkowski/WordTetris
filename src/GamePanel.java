@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,12 +15,15 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     final int FPS = 60;
     PlayManager pm = new PlayManager();
-
+    KeyHandler keyHandler = new KeyHandler();
     public GamePanel(){
 
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.white);
         this.setLayout(null);
+
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
 
         launchGame();
 
@@ -79,5 +83,6 @@ public class GamePanel extends JPanel implements Runnable{
             isBlocDropping = true;
         }
         block.draw(g2);
+        keyHandler.draw(g2);
     }
 }
