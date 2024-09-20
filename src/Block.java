@@ -13,7 +13,7 @@ public class Block {
     }
 
     public void update(){
-
+        y += BLOCK_HEIGHT;
     }
 
     public void draw(Graphics2D g2){

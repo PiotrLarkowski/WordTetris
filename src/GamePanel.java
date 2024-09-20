@@ -8,7 +8,7 @@ public class GamePanel extends JPanel implements Runnable{
     static final int WIDTH = 600;
     static final int HEIGHT = 900;
     ArrayList<String> wordsList = new ArrayList<>(Arrays.asList("APPLE","BOTTLE"));
-
+    long lastTime, currentTime;
     Boolean isBlocDropping = false;
     Block block;
     Thread gameThread;
@@ -61,7 +61,12 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         pm.update();
-
+        currentTime = System.currentTimeMillis();
+        if(isBlocDropping && (currentTime-lastTime)>=2000){
+            System.out.println("Block update");
+            block.update();
+            lastTime = currentTime;
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -70,6 +75,8 @@ public class GamePanel extends JPanel implements Runnable{
         pm.draw(g2);
         if(!isBlocDropping){
             block = new Block(wordsList.get(0));
+            lastTime = System.currentTimeMillis();
+            isBlocDropping = true;
         }
         block.draw(g2);
     }
