@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WordTetris:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/WordTetris_jar</output-path>
+    <root id="archive" name="WordTetris.jar">
+      <element id="module-output" name="WordTetris" />
+    </root>
+  </artifact>
+</component>

@@ -25,6 +25,18 @@ public class KeyHandler implements KeyListener {
             }
             stringBuilder = new StringBuilder();
             clearAllLetters();
+        }else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            if(letter5 != ' '){
+                letter5 = ' ';
+            }else if(letter4 != ' '){
+                letter4 = ' ';
+            }else if(letter3 != ' '){
+                letter3 = ' ';
+            }else if(letter2 != ' '){
+                letter2 = ' ';
+            }else if(letter1 != ' '){
+                letter1 = ' ';
+            }
         }else {
             input = (char)e.getKeyCode();
             stringBuilder.append(input);
