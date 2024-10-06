@@ -10,9 +10,6 @@ public class KeyHandler implements KeyListener {
     char letter3 = ' ';
     char letter4 = ' ';
     char letter5 = ' ';
-    char letter6 = ' ';
-    char letter7 = ' ';
-    char letter8 = ' ';
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -22,12 +19,16 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            if(stringBuilder.toString().equals(Block.word)){
+                GamePanel.isBlocDropping = false;
+                Block.y = PlayManager.TOP+12;
+            }
             stringBuilder = new StringBuilder();
             clearAllLetters();
         }else {
             input = (char)e.getKeyCode();
             stringBuilder.append(input);
-            if(letter1==' '){
+            if(letter1 == ' '){
                 letter1 = input;
             }else if(letter2 == ' '){
                 letter2 = input;
@@ -37,12 +38,6 @@ public class KeyHandler implements KeyListener {
                 letter4 = input;
             }else if(letter5 == ' '){
                 letter5 = input;
-            }else if(letter6 == ' '){
-                letter6 = input;
-            }else if(letter7 == ' '){
-                letter7 = input;
-            }else if(letter8 == ' '){
-                letter8 = input;
             }
         }
     }
@@ -58,9 +53,6 @@ public class KeyHandler implements KeyListener {
         letter3 = ' ';
         letter4 = ' ';
         letter5 = ' ';
-        letter6 = ' ';
-        letter7 = ' ';
-        letter8 = ' ';
     }
 
     public void draw(Graphics2D g2){
@@ -69,24 +61,18 @@ public class KeyHandler implements KeyListener {
 
         g2.drawString("INPUT TEXT", 200, 730);
 
-        g2.drawRect(70,760,40,60);
         g2.drawRect(130,760,40,60);
         g2.drawRect(190,760,40,60);
         g2.drawRect(250,760,40,60);
         g2.drawRect(310,760,40,60);
         g2.drawRect(370,760,40,60);
-        g2.drawRect(430,760,40,60);
-        g2.drawRect(490,760,40,60);
 
         try {
-            g2.drawString("" + letter1, 80, 800);
-            g2.drawString("" + letter2, 140, 800);
-            g2.drawString("" + letter3, 200, 800);
-            g2.drawString("" + letter4, 260, 800);
-            g2.drawString("" + letter5, 320, 800);
-            g2.drawString("" + letter6, 380, 800);
-            g2.drawString("" + letter7, 440, 800);
-            g2.drawString("" + letter8, 500, 800);
+            g2.drawString("" + letter1, 140, 800);
+            g2.drawString("" + letter2, 200, 800);
+            g2.drawString("" + letter3, 260, 800);
+            g2.drawString("" + letter4, 320, 800);
+            g2.drawString("" + letter5, 380, 800);
         }catch(Exception ignored){
         }
     }

@@ -1,22 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
-public class GamePanel extends JPanel implements Runnable{
-
+public class GamePanel extends JPanel implements Runnable {
+    public boolean endGame = false;
     static final int WIDTH = 600;
     static final int HEIGHT = 900;
-    ArrayList<String> wordsList = new ArrayList<>(Arrays.asList("APPLE","BOTTLE"));
+    static ArrayList<String> wordsList = new ArrayList<>();
     long lastTime, currentTime;
-    Boolean isBlocDropping = false;
+    static Boolean isBlocDropping = false;
     Block block;
     Thread gameThread;
     final int FPS = 60;
     PlayManager pm = new PlayManager();
     KeyHandler keyHandler = new KeyHandler();
-    public GamePanel(){
+
+    public GamePanel() {
 
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.white);
@@ -25,11 +29,13 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
+        downloadWordsFile();
+
         launchGame();
 
     }
 
-    public void launchGame(){
+    public void launchGame() {
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -42,52 +48,84 @@ public class GamePanel extends JPanel implements Runnable{
         long currentTime;
         long timer = 0;
         long drawCount = 0;
-        while(gameThread != null){
+        while (gameThread != null) {
 
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if(delta >= 1){
+            if (delta >= 1) {
                 update();
                 repaint();
-                delta --;
+                delta--;
                 drawCount++;
             }
-            if(timer >= 1000000000){
-                System.out.println("FPS:"+drawCount);
+            if (timer >= 1000000000) {
+                System.out.println("FPS:" + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
         }
     }
-
-    public void update(){
+    public void update() {
         pm.update();
-        currentTime = System.currentTimeMillis();
-        if(isBlocDropping && (currentTime-lastTime)>=1000){
+         currentTime = System.currentTimeMillis();
+        if (isBlocDropping && (currentTime - lastTime) >= 500) {
             block.update();
             lastTime = currentTime;
         }
     }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        String presentWord;
+        Random random = new Random();
         pm.draw(g2);
-        if(!isBlocDropping){
-            block = new Block(wordsList.get(0));
-            lastTime = System.currentTimeMillis();
-            isBlocDropping = true;
+        if(!endGame) {
+            if (!isBlocDropping) {
+                presentWord = wordsList.get(random.nextInt(wordsList.size()-1));
+                block = new Block(presentWord);
+                lastTime = System.currentTimeMillis();
+                isBlocDropping = true;
+            }
+            if (Block.y >= 600 - PlayManager.bottomLevel * Block.BLOCK_HEIGHT) {
+                PlayManager.bottomY = Block.y + 2;
+                isBlocDropping = false;
+                Block.y = PlayManager.TOP + 12;
+                PlayManager.bottomLevel++;
+            }
+            if (PlayManager.bottomLevel == 9) {
+                endGame = true;
+            }
+            block.draw(g2);
+            keyHandler.draw(g2);
+        }else{
+            g2.setColor(Color.white);
+            g2.fillRect(150,300,300,200);
+            g2.setColor(Color.black);
+            g2.drawRect(160,310,280,180);
+            g2.setFont(new Font("Arial",Font.BOLD,64));
+            g2.drawString("THE",240,390);
+            g2.drawString("END",240,450);
         }
-        if(Block.y >= 600-PlayManager.bottomLevel*Block.BLOCK_HEIGHT){
-            PlayManager.bottomY = Block.y+2;
-            isBlocDropping = false;
-            Block.y = PlayManager.TOP+12;
-            PlayManager.bottomLevel ++;
+    }
+    public static ArrayList<String> downloadWordsFile() {
+        ArrayList<String> allWords = new ArrayList<>();
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                Scanner myReader = new Scanner(file);
+                while (myReader.hasNextLine()) {
+                    wordsList.add(myReader.nextLine());
+                }
+                myReader.close();
+            } catch (Exception e) {
+                System.out.println("Read File Problem");
+            }
         }
-        block.draw(g2);
-        keyHandler.draw(g2);
+        return allWords;
     }
 }

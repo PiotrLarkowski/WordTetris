@@ -5,7 +5,7 @@ public class Block {
     public static final int BLOCK_WIDTH = 180;
     public static int x = (GamePanel.WIDTH/2)-PlayManager.WIDTH/2+(PlayManager.WIDTH/2-BLOCK_WIDTH/2);
     public static int y = PlayManager.TOP+12;
-    String word;
+    static String word;
 
     public Block(String presentWord){
         this.word = presentWord;
